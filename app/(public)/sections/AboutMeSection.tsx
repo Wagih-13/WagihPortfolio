@@ -19,7 +19,7 @@ const AboutMeSection = () => {
         </h2>
       </section>
       <section className="border-box w-full">
-        <p className="text-[1.2rem]  m:text-[1.5rem] md:text-[1.6rem] lg:text-[1.6rem]text-center text-secondary mt-4 md:text-center">
+        <p className="text-[1.2rem]  m:text-[1.5rem] md:text-[1.6rem] lg:text-[1.6rem] text-start md:text-center text-secondary mt-4 md:text-center">
           lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do
           eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
           minim veniam, quis nostrud exercitation ullamco laboris nisi ut
