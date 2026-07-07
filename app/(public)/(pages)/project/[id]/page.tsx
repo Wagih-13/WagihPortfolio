@@ -5,165 +5,42 @@ import {
   FaCalendarAlt,
   FaArrowLeft,
 } from "react-icons/fa";
-import { MdDevices, MdCloudQueue, MdSpeed } from "react-icons/md";
+import { MdDevices } from "react-icons/md";
 import Link from "next/link";
+import Image from "next/image";
+import projectsData from "@/data/projects.json";
 
-const projectData: Record<
-  string,
-  {
-    name: string;
-    description: string;
-    visitUrl: string;
-    githubUrl: string;
-    timeframe: string;
-    tools: string[];
-    images: string[];
-    challenges: { problem: string; solution: string }[];
+interface Project {
+  id: number;
+  slug: string;
+  name: string;
+  shortName: string | null;
+  description: string;
+  visitUrl: string;
+  githubUrl: string;
+  timeframe: string;
+  category: string;
+  featured: boolean;
+  order: number;
+  tools: string[];
+  images: string[];
+  gallery: string[];
+  challenges: { problem: string; solution: string }[];
+}
+
+const getProject = (id: string): Project | undefined => {
+  // Try numeric ID first
+  const numericId = parseInt(id, 10);
+  if (!isNaN(numericId)) {
+    return projectsData.projects.find((p) => p.id === numericId);
   }
-> = {
-  "1": {
-    name: "E-Commerce Platform",
-    description:
-      "A full-scale Next.js e-commerce platform with secure authentication, server-side rendering, and a complete admin control panel.",
-    visitUrl: "https://modestwear.cloud",
-    githubUrl: "https://github.com/wagih-13",
-    timeframe: "3 months (Jan 2025 - Mar 2025)",
-    tools: [
-      "Next.js",
-      "TypeScript",
-      "Redux Toolkit",
-      "TanStack Query",
-      "Tailwind CSS",
-      "NextAuth",
-      "PostgreSQL",
-      "Nginx",
-      "PM2",
-    ],
-    images: [],
-    challenges: [
-      {
-        problem:
-          "Implementing a secure authentication system with role-based access control for customers, admins, and vendors was complex. Managing session persistence across server-side rendered pages while ensuring CSRF protection required careful architecture.",
-        solution:
-          "I used NextAuth.js with JWT strategy for stateless authentication, combined with middleware-based route protection. For role-based access, I created a custom middleware that checks user roles before rendering protected pages, and implemented CSRF tokens on all mutation endpoints.",
-      },
-      {
-        problem:
-          "Optimizing the product listing page for 1,000+ concurrent users with real-time inventory updates caused significant database load and slow page loads.",
-        solution:
-          "I implemented TanStack Query for client-side caching with stale-while-revalidate strategy, added server-side pagination, and used Nginx reverse proxy caching for static assets. This reduced database queries by 60% and improved Lighthouse performance score from 45 to 92.",
-      },
-      {
-        problem:
-          "Building a responsive admin dashboard with real-time order management, inventory tracking, and analytics charts that worked seamlessly across devices.",
-        solution:
-          "I designed a modular component architecture with Redux Toolkit for global state management. Charts were built with server-side data aggregation to minimize client-side processing, and the dashboard layout uses CSS Grid with Tailwind responsive breakpoints for full mobile compatibility.",
-      },
-    ],
-  },
-  "2": {
-    name: "Booking System",
-    description:
-      "A React-based booking platform supporting customers, employees, and administrators with dedicated dashboards and real-time availability logic.",
-    visitUrl: "#",
-    githubUrl: "https://github.com/wagih-13",
-    timeframe: "2.5 months (Jun 2024 - Aug 2024)",
-    tools: [
-      "React",
-      "TypeScript",
-      "Redux Toolkit",
-      "REST APIs",
-      "Tailwind CSS",
-      "Sass",
-      "Node.js",
-      "PostgreSQL",
-    ],
-    images: [],
-    challenges: [
-      {
-        problem:
-          "Designing real-time availability logic that prevented double-booking while handling timezone differences and varying service durations was technically challenging.",
-        solution:
-          "I implemented a server-side locking mechanism using database transactions to prevent race conditions during booking. Availability slots are calculated on the server using a timezone-aware algorithm, and the frontend polls for updates every 30 seconds using TanStack Query's refetchInterval.",
-      },
-      {
-        problem:
-          "Creating three distinct role-based dashboards (customer, employee, admin) with different views and permissions without duplicating code.",
-        solution:
-          "I built a shared component library with role-based rendering props. Each dashboard is composed from the same base components, with visibility and behavior controlled by the user's role context. This reduced code duplication by 70% and made adding new features consistent across all roles.",
-      },
-    ],
-  },
-  "3": {
-    name: "ERP System",
-    description:
-      "A modular ERP interface with streamlined data management, multi-role access control, and comprehensive reporting for business clients.",
-    visitUrl: "#",
-    githubUrl: "https://github.com/wagih-13",
-    timeframe: "4 months (Sep 2024 - Dec 2024)",
-    tools: [
-      "React",
-      "Redux Toolkit",
-      "TypeScript",
-      "Tailwind CSS",
-      "TanStack Query",
-      "REST APIs",
-      "PostgreSQL",
-      "Nginx",
-    ],
-    images: [],
-    challenges: [
-      {
-        problem:
-          "Managing complex nested form data for inventory, orders, and invoices with real-time validation across multiple related entities was causing performance issues.",
-        solution:
-          "I normalized the Redux store structure using entity adapters to handle nested data efficiently. Form validation was moved to a debounced server-side validation layer, and TanStack Query was used for optimistic updates on CRUD operations, providing instant UI feedback while syncing in the background.",
-      },
-      {
-        problem:
-          "Generating printable PDF reports (invoices, inventory reports) from dynamic data while maintaining consistent formatting.",
-        solution:
-          "I created a server-side PDF generation endpoint using a headless browser approach, where the React components are rendered to HTML and converted to PDF. This ensured pixel-perfect output matching the web UI styling, and reports could be generated asynchronously for large datasets.",
-      },
-    ],
-  },
-  "4": {
-    name: "CRM Platform",
-    description:
-      "A customer relationship management interface with lead tracking, communication logs, and analytics dashboards for sales teams.",
-    visitUrl: "#",
-    githubUrl: "https://github.com/wagih-13",
-    timeframe: "3 months (Oct 2024 - Dec 2024)",
-    tools: [
-      "React",
-      "TypeScript",
-      "Redux Toolkit",
-      "TanStack Query",
-      "Tailwind CSS",
-      "REST APIs",
-      "PostgreSQL",
-    ],
-    images: [],
-    challenges: [
-      {
-        problem:
-          "Implementing a drag-and-drop Kanban board for lead pipeline management that performed smoothly with hundreds of leads across multiple stages.",
-        solution:
-          "I used a lightweight drag-and-drop library with virtualization to handle large lists. State updates are batched and debounced to prevent excessive re-renders, and the board layout uses CSS Grid with auto-fit columns for responsive behavior across screen sizes.",
-      },
-      {
-        problem:
-          "Building a comprehensive search and filter system that could query across leads, contacts, deals, and communication history with sub-second response times.",
-        solution:
-          "I implemented server-side full-text search using PostgreSQL tsvector indexes, with a debounced search input that sends requests only after the user stops typing. Results are cached with TanStack Query, and advanced filters are serialized into URL query parameters for shareable search states.",
-      },
-    ],
-  },
+  // Fall back to slug lookup
+  return projectsData.projects.find((p) => p.slug === id);
 };
 
 const Page = async ({ params }: { params: Promise<{ id: string }> }) => {
   const { id } = await params;
-  const project = projectData[id];
+  const project = getProject(id);
 
   if (!project) {
     return (
@@ -188,7 +65,7 @@ const Page = async ({ params }: { params: Promise<{ id: string }> }) => {
   return (
     <main className="bg-tertiary min-h-screen">
       {/* Back Navigation */}
-      <div className="p-4 flex items-center justify-center ">
+      <div className="p-4 flex items-center justify-center">
         <Link
           href="/"
           className="inline-flex items-center gap-2 text-secondary hover:text-primary transition-colors font-tertiary text-[0.8rem] sm:text-[0.9rem]"
@@ -199,7 +76,7 @@ const Page = async ({ params }: { params: Promise<{ id: string }> }) => {
       </div>
 
       {/* Project Header */}
-      <section className="border-box ">
+      <section className="border-box">
         <h1 className="font-bold font-main text-[2.5rem] sm:text-[3.5rem] md:text-[4.5rem] lg:text-[5.5rem] text-primary text-center leading-tight">
           {project.name}
         </h1>
@@ -241,15 +118,17 @@ const Page = async ({ params }: { params: Promise<{ id: string }> }) => {
       <section className="border-box">
         <h2 className="section-title">Gallery</h2>
         <div className="grid md:grid-cols-2 grid-cols-1 gap-4 mt-8">
-          {project.images.length > 0 ? (
-            project.images.map((img, index) => (
+          {project.gallery.length > 0 ? (
+            project.gallery.map((img, index) => (
               <div
                 key={index}
                 className="aspect-video bg-white rounded-lg border border-gray-200 flex items-center justify-center overflow-hidden"
               >
-                <img
+                <Image
                   src={img}
                   alt={`${project.name} screenshot ${index + 1}`}
+                  width={800}
+                  height={450}
                   className="w-full h-full object-cover"
                 />
               </div>
@@ -279,7 +158,7 @@ const Page = async ({ params }: { params: Promise<{ id: string }> }) => {
       {/* Tools & Technologies */}
       <section className="border-box">
         <h2 className="section-title">Tools & Technologies</h2>
-        <div className="flex flex-wrap items-center justify-center gap-3 mt-8">
+        <div className="flex flex-wrap items-center justify-center gap-3 mt-12 md:mt-8">
           {project.tools.map((tool, index) => (
             <span
               key={index}
