@@ -20,13 +20,16 @@ const AboutMeSection = () => {
       </section>
       <section className="border-box w-full">
         <p className="text-[1.2rem]  m:text-[1.5rem] md:text-[1.6rem] lg:text-[1.6rem] text-start md:text-center text-secondary mt-4 md:text-center">
-          lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do
-          eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
-          minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-          aliquip ex ea commodo consequat. Duis aute irure dolor in
-          reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-          pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
-          culpa qui officia deserunt mollit anim id est laborum.
+          I specialize in transforming complex business requirements into
+          intuitive, polished web interfaces. My approach centers on clean
+          architecture — structuring codebases so they remain maintainable and
+          scalable as features grow. Whether it's designing a bilingual CMS with
+          JSONB-based localization, implementing real-time booking logic with
+          race-condition prevention, or building a Kanban pipeline for a CRM, I
+          focus on solving the hard problems at the system level rather than
+          patching symptoms. Outside of code, I care deeply about user
+          experience, performance metrics, and shipping products that people
+          actually enjoy using.
         </p>
       </section>
     </div>

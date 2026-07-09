@@ -20,11 +20,13 @@
         "Tailwind CSS",
         "NextAuth",
         "PostgreSQL",
+        "Drizzle ORM",
         "Nginx",
         "PM2"
       ],
-      "images": ["/projects/modest-wear/cover.png"],
+      "images": ["/projects/modest-wear/cover.webp"],
       "gallery": [
+        "/projects/modest-wear/screen.png",
         "/projects/modest-wear/screen-1.webp",
         "/projects/modest-wear/screen-2.webp",
         "/projects/modest-wear/screen-3.webp",
@@ -49,112 +51,58 @@
     },
     {
       "id": 2,
-      "slug": "booking-system",
-      "name": "Booking System",
-      "shortName": "BOOKING SYSTEM",
-      "description": "A React-based booking platform supporting customers, employees, and administrators with dedicated dashboards and real-time availability logic.",
-      "visitUrl": "#",
-      "githubUrl": "https://github.com/wagih-13",
-      "timeframe": "2.5 months (Jun 2024 - Aug 2024)",
-      "category": "booking",
-      "featured": false,
-      "order": 2,
-      "tools": [
-        "React",
-        "TypeScript",
-        "Redux Toolkit",
-        "REST APIs",
-        "Tailwind CSS",
-        "Sass",
-        "Node.js",
-        "PostgreSQL"
-      ],
-      "images": ["/projects/booking-system/cover.png"],
-      "gallery": ["/projects/booking-system/cover.png"],
-      "challenges": [
-        {
-          "problem": "Designing real-time availability logic that prevented double-booking while handling timezone differences and varying service durations was technically challenging.",
-          "solution": "I implemented a server-side locking mechanism using database transactions to prevent race conditions during booking. Availability slots are calculated on the server using a timezone-aware algorithm, and the frontend polls for updates every 30 seconds using TanStack Query's refetchInterval."
-        },
-        {
-          "problem": "Creating three distinct role-based dashboards (customer, employee, admin) with different views and permissions without duplicating code.",
-          "solution": "I built a shared component library with role-based rendering props. Each dashboard is composed from the same base components, with visibility and behavior controlled by the user's role context. This reduced code duplication by 70% and made adding new features consistent across all roles."
-        }
-      ]
-    },
-    {
-      "id": 3,
-      "slug": "erp-system",
-      "name": "ERP System",
-      "shortName": null,
-      "description": "A modular ERP interface with streamlined data management, multi-role access control, and comprehensive reporting for business clients.",
-      "visitUrl": "#",
-      "githubUrl": "https://github.com/wagih-13",
-      "timeframe": "4 months (Sep 2024 - Dec 2024)",
-      "category": "erp",
-      "featured": false,
-      "order": 3,
-      "tools": [
-        "React",
-        "Redux Toolkit",
-        "TypeScript",
-        "Tailwind CSS",
-        "TanStack Query",
-        "REST APIs",
-        "PostgreSQL",
-        "Nginx"
-      ],
-      "images": ["/projects/erp-system/cover.png"],
-      "gallery": ["/projects/erp-system/cover.png"],
-      "challenges": [
-        {
-          "problem": "Managing complex nested form data for inventory, orders, and invoices with real-time validation across multiple related entities was causing performance issues.",
-          "solution": "I normalized the Redux store structure using entity adapters to handle nested data efficiently. Form validation was moved to a debounced server-side validation layer, and TanStack Query was used for optimistic updates on CRUD operations, providing instant UI feedback while syncing in the background."
-        },
-        {
-          "problem": "Generating printable PDF reports (invoices, inventory reports) from dynamic data while maintaining consistent formatting.",
-          "solution": "I created a server-side PDF generation endpoint using a headless browser approach, where the React components are rendered to HTML and converted to PDF. This ensured pixel-perfect output matching the web UI styling, and reports could be generated asynchronously for large datasets."
-        }
-      ]
-    },
-    {
-      "id": 4,
-      "slug": "crm-platform",
-      "name": "CRM Platform",
-      "shortName": null,
-      "description": "A customer relationship management interface with lead tracking, communication logs, and analytics dashboards for sales teams.",
-      "visitUrl": "#",
-      "githubUrl": "https://github.com/wagih-13",
-      "timeframe": "3 months (Oct 2024 - Dec 2024)",
-      "category": "crm",
+      "slug": "staron-egypt",
+      "name": "Staron Egypt",
+      "shortName": "STARON EGYPT",
+      "description": "A bilingual (EN/AR) B2C + B2B marketing and lead-generation platform for a contracting and finishing company. Built with Next.js, Drizzle ORM, and TypeScript, the platform serves as a comprehensive CMS-driven website featuring a public marketing site, lead capture system, admin dashboard, and operational tooling spanning 30+ interconnected database tables.",
+      "visitUrl": null,
+      "githubUrl": null,
+      "timeframe": null,
+      "category": "cms",
       "featured": true,
-      "order": 4,
+      "order": 5,
       "tools": [
-        "React",
+        "Next.js",
         "TypeScript",
-        "Redux Toolkit",
         "TanStack Query",
         "Tailwind CSS",
-        "REST APIs",
-        "PostgreSQL"
+        "NextAuth",
+        "Drizzle ORM",
+        "PostgreSQL",
+        "JSONB"
       ],
-      "images": ["/projects/crm-platform/cover.png"],
-      "gallery": ["/projects/crm-platform/cover.png"],
+      "images": ["/projects/satron-egypt/project-1.webp"],
+      "gallery": [
+        "/projects/satron-egypt/project-1.webp",
+        "/projects/satron-egypt/project-2.webp",
+        "/projects/satron-egypt/project-3.webp",
+        "/projects/satron-egypt/project-4.webp",
+        "/projects/satron-egypt/project-5.webp",
+        "/projects/satron-egypt/project-6.webp",
+        "/projects/satron-egypt/project-7.webp",
+        "/projects/satron-egypt/project-8.webp",
+        "/projects/satron-egypt/project-9.webp",
+        "/projects/satron-egypt/project-10.webp"
+      ],
       "challenges": [
         {
-          "problem": "Implementing a drag-and-drop Kanban board for lead pipeline management that performed smoothly with hundreds of leads across multiple stages.",
-          "solution": "I used a lightweight drag-and-drop library with virtualization to handle large lists. State updates are batched and debounced to prevent excessive re-renders, and the board layout uses CSS Grid with auto-fit columns for responsive behavior across screen sizes."
+          "problem": "Designing a full bilingual (EN/AR) content architecture where every content entity — from page sections and blog articles to project descriptions and product features — required complete English and Arabic support. Storing translations as separate columns (title_en, title_ar, description_en, description_ar) across all tables would have caused a column explosion, making the schema unmaintainable, error-prone when querying, and not scalable as new content types were added.",
+          "solution": "Adopted a JSONB-based LocalizedString pattern stored as a single column per translatable field, typed as { ar: string; en: string }. Built a comprehensive i18n helper library providing getLocalizedValue() for locale extraction with fallback chains, createLocalizedString() as a factory, and isLocalizedString() for runtime type validation. This reduced column count by ~50% across all tables, made schema evolution trivial (add one JSONB column instead of two string columns), and ensured consistent translation handling application-wide."
         },
         {
-          "problem": "Building a comprehensive search and filter system that could query across leads, contacts, deals, and communication history with sub-second response times.",
-          "solution": "I implemented server-side full-text search using PostgreSQL tsvector indexes, with a debounced search input that sends requests only after the user stops typing. Results are cached with TanStack Query, and advanced filters are serialized into URL query parameters for shareable search states."
+          "problem": "Managing schema complexity across 30+ interconnected database tables spanning e-commerce (products, orders, carts, payments, shipping, discounts, wishlists, returns), marketing content (brands, materials, articles, projects, solutions), CMS (pages, sections, blocks), communications (contact messages, newsletter, quotations), and operations (audit logs, notifications, backups, analytics). Without structure, the schema risked becoming disorganized, inconsistent in patterns, and unsafe with manually written SQL queries.",
+          "solution": "Centralized all schema definitions in a dedicated schema directory — one file per domain entity with a unified barrel export. Used Drizzle ORM for full type safety with pgTable() and automatic TypeScript inference, centralized all Postgres enums via pgEnum() for consistency, declared every relationship (one-to-many, many-to-many, self-referential) in a single 400+ line relations file using Drizzle's relations() API for type-safe joins, and enforced unified timestamp and audit column patterns across all tables."
+        },
+        {
+          "problem": "Handling legacy data migration with backward compatibility when early content stored textual content as plain strings (English only) became incompatible with the new LocalizedString JSON format after bilingual support was introduced. The database contained a mix of legacy flat strings and modern JSON objects, risking data loss during migration, runtime crashes when code expected LocalizedString objects, and difficult rollback scenarios without backward compatibility.",
+          "solution": "Implemented a dual-format content block system with type guards (isLocalizedContentBlock, isLegacyContentBlock) to detect the format at runtime, a convertLegacyToLocalizedBlock() transformer that wraps legacy strings into { ar: \"\", en: originalValue }, a normalizeContentBlocks() function that accepts mixed arrays and returns uniform LocalizedContentBlocks, and a getContentBlockValue() reader for locale-appropriate extraction regardless of storage format. This enabled immediate reading of legacy data without migration, gradual background migration, and resilient frontend rendering with normalizeContentBlocks() called on every read."
         }
       ]
     }
   ],
   "metadata": {
-    "lastUpdated": "2026-07-07",
-    "totalProjects": 4,
+    "lastUpdated": "2026-07-09",
+    "totalProjects": 5,
     "version": "1.0.0",
     "schema": {
       "project": {
@@ -166,7 +114,7 @@
         "visitUrl": "string - Live project URL",
         "githubUrl": "string - Source code repository URL",
         "timeframe": "string - Development duration and dates",
-        "category": "string - Project category (e-commerce, booking, erp, crm)",
+        "category": "string - Project category (e-commerce, booking, erp, crm, cms)",
         "featured": "boolean - Whether to highlight on homepage",
         "order": "number - Display order priority",
         "tools": "string[] - Technologies and tools used",

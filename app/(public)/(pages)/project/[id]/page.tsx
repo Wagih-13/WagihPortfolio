@@ -1,9 +1,9 @@
-import React from "react";
 import {
   FaExternalLinkAlt,
   FaGithub,
   FaCalendarAlt,
   FaArrowLeft,
+  FaSpinner,
 } from "react-icons/fa";
 import { MdDevices } from "react-icons/md";
 import Link from "next/link";
@@ -86,16 +86,22 @@ const Page = async ({ params }: { params: Promise<{ id: string }> }) => {
 
         {/* Action Links */}
         <div className="flex flex-wrap items-center justify-center gap-4 mt-8">
-          <a
-            href={project.visitUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            style={{ color: "white" }}
-            className="inline-flex items-center gap-2 px-6 py-3 bg-primary font-secondary text-[0.9rem] sm:text-[1rem] rounded-lg hover:bg-secondary transition-colors duration-300"
-          >
-            <FaExternalLinkAlt />
-            Visit Project
-          </a>
+          {project.visitUrl ? (
+            <a
+              href={project.visitUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{ color: "white" }}
+              className="inline-flex items-center gap-2 px-6 py-3 bg-primary font-secondary text-[0.9rem] sm:text-[1rem] rounded-lg hover:bg-secondary transition-colors duration-300"
+            >
+              <FaExternalLinkAlt />
+              Visit Project
+            </a>
+          ) : (
+            <h3 className="inline-flex text-white items-center gap-2 px-6 py-3 bg-primary  text-[0.9rem] sm:text-[1rem] rounded-lg hover:bg-secondary transition-colors duration-300">
+              <FaSpinner /> Project is not live yet.
+            </h3>
+          )}
           <a
             href={project.githubUrl}
             target="_blank"
