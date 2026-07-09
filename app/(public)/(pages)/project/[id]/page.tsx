@@ -16,9 +16,9 @@ interface Project {
   name: string;
   shortName: string | null;
   description: string;
-  visitUrl: string;
-  githubUrl: string;
-  timeframe: string;
+  visitUrl: string | null;
+  githubUrl: string | null;
+  timeframe: string | null;
   category: string;
   featured: boolean;
   order: number;
@@ -102,15 +102,22 @@ const Page = async ({ params }: { params: Promise<{ id: string }> }) => {
               <FaSpinner /> Project is not live yet.
             </h3>
           )}
-          <a
-            href={project.githubUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 px-6 py-3 border border-gray-300 text-primary font-secondary text-[0.9rem] sm:text-[1rem] rounded-lg hover:bg-white transition-colors duration-300"
-          >
-            <FaGithub />
-            View Source
-          </a>
+          {project.githubUrl ? (
+            <a
+              href={project.githubUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 px-6 py-3 border border-gray-300 text-primary font-secondary text-[0.9rem] sm:text-[1rem] rounded-lg hover:bg-white transition-colors duration-300"
+            >
+              <FaGithub />
+              View Source
+            </a>
+          ) : (
+            <h3 className="inline-flex items-center gap-2 px-6 py-3 border border-gray-300 text-primary font-secondary text-[0.9rem] sm:text-[1rem] rounded-lg hover:bg-white transition-colors duration-300">
+              <FaGithub />
+              Source Private
+            </h3>
+          )}
         </div>
 
         {/* Timeframe */}
