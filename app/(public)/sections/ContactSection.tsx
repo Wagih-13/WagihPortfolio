@@ -196,10 +196,10 @@ const ContactSection = () => {
                   Email
                 </p>
                 <a
-                  href="mailto:awagih718@gmail.com"
+                  href="mailto:contact@wagih.site"
                   className="text-[1rem] sm:text-[1.1rem] text-primary hover:text-secondary transition-colors"
                 >
-                  awagih718@gmail.com
+                  contact@wagih.site
                 </a>
               </div>
             </div>
