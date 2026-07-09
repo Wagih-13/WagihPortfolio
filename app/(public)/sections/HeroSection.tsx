@@ -53,12 +53,14 @@ const HeroSection = () => {
           animate={{ opacity: 1 }}
           transition={{ duration: 0.3, delay: 0.3 }}
         >
-          <AnimatedText text="FrontEnd " delay={0.3} />
-          <AnimatedText
-            text="Developer"
-            className="text-zinc-700"
-            delay={0.3 + "FrontEnd ".length * 0.05}
-          />
+          <div className="flex flex-row flex-wrap justify-center items-center">
+            <AnimatedText text="FrontEnd" delay={0.3} />
+            <AnimatedText
+              text="Developer"
+              className="text-zinc-700"
+              delay={0.3 + "FrontEnd".length * 0.05}
+            />
+          </div>
         </motion.h2>
 
         <motion.p
