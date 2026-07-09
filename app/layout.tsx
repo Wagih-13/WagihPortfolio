@@ -31,13 +31,13 @@ export default function RootLayout({
       lang="en"
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased bg-tertiary `}
     >
-      <NavBarSection />
       <body className="">
+        <NavBarSection />
         {children}
+        <FooterSection />
         <Analytics />
         <SpeedInsights />
       </body>
-      <FooterSection />
     </html>
   );
 }
