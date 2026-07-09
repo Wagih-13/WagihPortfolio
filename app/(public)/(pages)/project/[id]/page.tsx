@@ -1,3 +1,5 @@
+"use client";
+
 import {
   FaExternalLinkAlt,
   FaGithub,
@@ -8,7 +10,9 @@ import {
 import { MdDevices } from "react-icons/md";
 import Link from "next/link";
 import Image from "next/image";
+import { motion } from "framer-motion";
 import projectsData from "@/data/projects.json";
+import { useParams } from "next/navigation";
 
 interface Project {
   id: number;
@@ -29,22 +33,51 @@ interface Project {
 }
 
 const getProject = (id: string): Project | undefined => {
-  // Try numeric ID first
   const numericId = parseInt(id, 10);
   if (!isNaN(numericId)) {
     return projectsData.projects.find((p) => p.id === numericId);
   }
-  // Fall back to slug lookup
   return projectsData.projects.find((p) => p.slug === id);
 };
 
-const Page = async ({ params }: { params: Promise<{ id: string }> }) => {
-  const { id } = await params;
+const staggerContainer = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: { staggerChildren: 0.1 },
+  },
+};
+
+const fadeUp = {
+  hidden: { opacity: 0, y: 40 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.5, ease: "easeOut" as const },
+  },
+};
+
+const fadeIn = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: { duration: 0.5, ease: "easeOut" as const },
+  },
+};
+
+const Page = () => {
+  const params = useParams();
+  const id = params.id as string;
   const project = getProject(id);
 
   if (!project) {
     return (
-      <div className="border-box min-h-[60vh] flex flex-col items-center justify-center">
+      <motion.div
+        className="border-box min-h-[60vh] flex flex-col items-center justify-center"
+        initial={{ opacity: 0, y: 30 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6 }}
+      >
         <h1 className="font-bold font-secondary text-[2rem] sm:text-[3rem] md:text-[4rem] text-primary">
           Project Not Found
         </h1>
@@ -58,14 +91,19 @@ const Page = async ({ params }: { params: Promise<{ id: string }> }) => {
           <FaArrowLeft />
           Back to Home
         </Link>
-      </div>
+      </motion.div>
     );
   }
 
   return (
     <main className="bg-tertiary min-h-screen">
       {/* Back Navigation */}
-      <div className="p-4 flex items-center justify-center">
+      <motion.div
+        className="p-4 flex items-center justify-center"
+        initial={{ opacity: 0, x: -20 }}
+        animate={{ opacity: 1, x: 0 }}
+        transition={{ duration: 0.4 }}
+      >
         <Link
           href="/"
           className="inline-flex items-center gap-2 text-secondary hover:text-primary transition-colors font-tertiary text-[0.8rem] sm:text-[0.9rem]"
@@ -73,19 +111,43 @@ const Page = async ({ params }: { params: Promise<{ id: string }> }) => {
           <FaArrowLeft />
           Back to Projects
         </Link>
-      </div>
+      </motion.div>
 
       {/* Project Header */}
-      <section className="border-box">
-        <h1 className="font-bold font-main text-[2.5rem] sm:text-[3.5rem] md:text-[4.5rem] lg:text-[5.5rem] text-primary text-center leading-tight">
+      <motion.section
+        className="border-box"
+        initial={{ opacity: 0, y: 50 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, margin: "-80px" }}
+        transition={{ duration: 0.6, ease: "easeOut" }}
+      >
+        <motion.h1
+          className="font-bold font-main text-[2.5rem] sm:text-[3.5rem] md:text-[4.5rem] lg:text-[5.5rem] text-primary text-center leading-tight"
+          initial={{ opacity: 0, y: -30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6, delay: 0.1 }}
+        >
           {project.name}
-        </h1>
-        <p className="text-[1rem] sm:text-[1.2rem] md:text-[1.5rem] lg:text-[1.8rem] text-secondary text-center mt-4 max-w-4xl mx-auto">
+        </motion.h1>
+        <motion.p
+          className="text-[1rem] sm:text-[1.2rem] md:text-[1.5rem] lg:text-[1.8rem] text-secondary text-center mt-4 max-w-4xl mx-auto"
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6, delay: 0.2 }}
+        >
           {project.description}
-        </p>
+        </motion.p>
 
         {/* Action Links */}
-        <div className="flex flex-wrap items-center justify-center gap-4 mt-8">
+        <motion.div
+          className="flex flex-wrap items-center justify-center gap-4 mt-8"
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5, delay: 0.3 }}
+        >
           {project.visitUrl ? (
             <a
               href={project.visitUrl}
@@ -98,7 +160,7 @@ const Page = async ({ params }: { params: Promise<{ id: string }> }) => {
               Visit Project
             </a>
           ) : (
-            <h3 className="inline-flex text-white items-center gap-2 px-6 py-3 bg-primary  text-[0.9rem] sm:text-[1rem] rounded-lg hover:bg-secondary transition-colors duration-300">
+            <h3 className="inline-flex text-white items-center gap-2 px-6 py-3 bg-primary text-[0.9rem] sm:text-[1rem] rounded-lg hover:bg-secondary transition-colors duration-300">
               <FaSpinner /> Project is not live yet.
             </h3>
           )}
@@ -118,23 +180,42 @@ const Page = async ({ params }: { params: Promise<{ id: string }> }) => {
               Source Private
             </h3>
           )}
-        </div>
+        </motion.div>
 
         {/* Timeframe */}
-        <div className="flex items-start justify-center gap-2 mt-6 text-secondary/60 font-tertiary text-[0.7rem] sm:text-[0.8rem]">
+        <motion.div
+          className="flex items-start justify-center gap-2 mt-6 text-secondary/60 font-tertiary text-[0.7rem] sm:text-[0.8rem]"
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.4, delay: 0.4 }}
+        >
           <FaCalendarAlt />
           <span>{project.timeframe}</span>
-        </div>
-      </section>
+        </motion.div>
+      </motion.section>
 
       {/* Gallery Section */}
-      <section className="border-box">
+      <motion.section
+        className="border-box"
+        initial={{ opacity: 0, y: 50 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, margin: "-80px" }}
+        transition={{ duration: 0.6, ease: "easeOut" }}
+      >
         <h2 className="section-title">Gallery</h2>
-        <div className="grid md:grid-cols-2 grid-cols-1 gap-4 mt-8">
+        <motion.div
+          className="grid md:grid-cols-2 grid-cols-1 gap-4 mt-8"
+          variants={staggerContainer}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-50px" }}
+        >
           {project.gallery.length > 0 ? (
             project.gallery.map((img, index) => (
-              <div
+              <motion.div
                 key={index}
+                variants={fadeUp}
                 className="aspect-video bg-white rounded-lg border border-gray-200 flex items-center justify-center overflow-hidden"
               >
                 <Image
@@ -144,10 +225,10 @@ const Page = async ({ params }: { params: Promise<{ id: string }> }) => {
                   height={450}
                   className="w-full h-full object-cover"
                 />
-              </div>
+              </motion.div>
             ))
           ) : (
-            <div className="md:col-span-2 col-span-1">
+            <motion.div variants={fadeIn} className="md:col-span-2 col-span-1">
               <div className="grid md:grid-cols-3 grid-cols-1 gap-4">
                 {[1, 2, 3].map((item) => (
                   <div
@@ -163,33 +244,59 @@ const Page = async ({ params }: { params: Promise<{ id: string }> }) => {
                   </div>
                 ))}
               </div>
-            </div>
+            </motion.div>
           )}
-        </div>
-      </section>
+        </motion.div>
+      </motion.section>
 
       {/* Tools & Technologies */}
-      <section className="border-box">
+      <motion.section
+        className="border-box"
+        initial={{ opacity: 0, y: 50 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, margin: "-80px" }}
+        transition={{ duration: 0.6, ease: "easeOut" }}
+      >
         <h2 className="section-title">Tools & Technologies</h2>
-        <div className="flex flex-wrap items-center justify-center gap-3 mt-12 md:mt-8">
+        <motion.div
+          className="flex flex-wrap items-center justify-center gap-3 mt-12 md:mt-8"
+          variants={staggerContainer}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-50px" }}
+        >
           {project.tools.map((tool, index) => (
-            <span
+            <motion.span
               key={index}
+              variants={fadeUp}
               className="px-4 py-2 bg-white text-primary border border-gray-200 rounded-full font-tertiary text-[0.7rem] sm:text-[0.8rem] md:text-[0.9rem] hover:shadow-md transition-shadow duration-300"
             >
               {tool}
-            </span>
+            </motion.span>
           ))}
-        </div>
-      </section>
+        </motion.div>
+      </motion.section>
 
       {/* Challenges & Solutions */}
-      <section className="border-box">
+      <motion.section
+        className="border-box"
+        initial={{ opacity: 0, y: 50 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, margin: "-80px" }}
+        transition={{ duration: 0.6, ease: "easeOut" }}
+      >
         <h2 className="section-title">Challenges</h2>
-        <div className="flex flex-col gap-8 mt-8 text-start max-w-4xl mx-auto">
+        <motion.div
+          className="flex flex-col gap-8 mt-8 text-start max-w-4xl mx-auto"
+          variants={staggerContainer}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-50px" }}
+        >
           {project.challenges.map((item, index) => (
-            <div
+            <motion.div
               key={index}
+              variants={fadeUp}
               className="bg-white p-6 rounded-lg border border-gray-200 hover:shadow-md transition-shadow duration-300"
             >
               <div className="flex items-start gap-4">
@@ -211,10 +318,10 @@ const Page = async ({ params }: { params: Promise<{ id: string }> }) => {
                   </p>
                 </div>
               </div>
-            </div>
+            </motion.div>
           ))}
-        </div>
-      </section>
+        </motion.div>
+      </motion.section>
     </main>
   );
 };

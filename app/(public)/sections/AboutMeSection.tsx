@@ -1,16 +1,24 @@
+"use client";
+
 import Image from "next/image";
 import React from "react";
+import { motion } from "framer-motion";
 
 const AboutMeSection = () => {
   return (
-    <div className="border-box ">
+    <motion.div
+      className="border-box"
+      initial={{ opacity: 0, y: 60 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: "-100px" }}
+      transition={{ duration: 0.7, ease: "easeOut" }}
+    >
       <section className="relative h-[60vw] md:h-[500px] bg-tertiary flex flex-col items-center justify-center overflow-hidden">
         <Image
           src="/Owner.png"
           alt="Owner Project"
           width={500}
           height={300}
-          // استخدمنا عرض نسبي للموبايل وعرض ثابت للكمبيوتر
           className="absolute z-10 shadow-lg rounded-full left-1/2 transform -translate-x-1/2 w-[60vw] md:w-[500px] h-auto object-cover"
         />
 
@@ -19,20 +27,26 @@ const AboutMeSection = () => {
         </h2>
       </section>
       <section className="border-box w-full">
-        <p className="text-[1.2rem]  m:text-[1.5rem] md:text-[1.6rem] lg:text-[1.6rem] text-start md:text-center text-secondary mt-4 md:text-center">
+        <motion.p
+          className="text-[1.2rem] m:text-[1.5rem] md:text-[1.6rem] lg:text-[1.6rem] text-start md:text-center text-secondary mt-4 md:text-center"
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6, delay: 0.2, ease: "easeOut" }}
+        >
           I specialize in transforming complex business requirements into
           intuitive, polished web interfaces. My approach centers on clean
-          architecture — structuring codebases so they remain maintainable and
-          scalable as features grow. Whether it's designing a bilingual CMS with
-          JSONB-based localization, implementing real-time booking logic with
-          race-condition prevention, or building a Kanban pipeline for a CRM, I
-          focus on solving the hard problems at the system level rather than
-          patching symptoms. Outside of code, I care deeply about user
+          architecture &mdash; structuring codebases so they remain maintainable
+          and scalable as features grow. Whether it's designing a bilingual CMS
+          with JSONB-based localization, implementing real-time booking logic
+          with race-condition prevention, or building a Kanban pipeline for a
+          CRM, I focus on solving the hard problems at the system level rather
+          than patching symptoms. Outside of code, I care deeply about user
           experience, performance metrics, and shipping products that people
           actually enjoy using.
-        </p>
+        </motion.p>
       </section>
-    </div>
+    </motion.div>
   );
 };
 

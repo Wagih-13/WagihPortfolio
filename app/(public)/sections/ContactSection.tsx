@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useCallback } from "react";
+import { motion } from "framer-motion";
 import {
   FaPhone,
   FaWhatsapp,
@@ -151,10 +152,22 @@ const ContactSection = () => {
     }`;
 
   return (
-    <section className="border-box">
+    <motion.section
+      className="border-box"
+      initial={{ opacity: 0, y: 50 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: "-80px" }}
+      transition={{ duration: 0.7, ease: "easeOut" }}
+    >
       <h2 className="section-title">Contact</h2>
 
-      <div className="grid md:grid-cols-2 grid-cols-1 gap-8 mt-8 text-start">
+      <motion.div
+        className="grid md:grid-cols-2 grid-cols-1 gap-8 mt-8 text-start"
+        initial={{ opacity: 0 }}
+        whileInView={{ opacity: 1 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.6, delay: 0.15 }}
+      >
         {/* Left Side - Contact Info */}
         <div className="flex flex-col items-start justify-center">
           <h3 className="font-bold font-secondary text-[1.8rem] sm:text-[2rem] md:text-[2.5rem] text-primary leading-tight mb-4">
@@ -395,8 +408,8 @@ const ContactSection = () => {
             </button>
           </form>
         </div>
-      </div>
-    </section>
+      </motion.div>
+    </motion.section>
   );
 };
 

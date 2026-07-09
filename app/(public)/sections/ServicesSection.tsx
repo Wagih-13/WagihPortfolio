@@ -1,4 +1,7 @@
+"use client";
+
 import React from "react";
+import { motion } from "framer-motion";
 import { FaReact, FaServer, FaRocket } from "react-icons/fa";
 import { SiNextdotjs } from "react-icons/si";
 import { MdDevices, MdCloudQueue, MdSpeed } from "react-icons/md";
@@ -48,15 +51,48 @@ const servicesData = [
   },
 ];
 
+const containerVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.15,
+    },
+  },
+};
+
+const cardVariants = {
+  hidden: { opacity: 0, y: 50, scale: 0.95 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    scale: 1,
+    transition: { duration: 0.5, ease: "easeOut" as const },
+  },
+};
+
 const ServicesSection = () => {
   return (
-    <section className="border-box">
+    <motion.section
+      className="border-box"
+      initial={{ opacity: 0, y: 40 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: "-80px" }}
+      transition={{ duration: 0.6, ease: "easeOut" }}
+    >
       <h2 className="section-title">Services</h2>
 
-      <div className="grid md:grid-cols-3 grid-cols-1 gap-6 mt-8">
+      <motion.div
+        className="grid md:grid-cols-3 grid-cols-1 gap-6 mt-8"
+        variants={containerVariants}
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, margin: "-50px" }}
+      >
         {servicesData.map((service, index) => (
-          <div
+          <motion.div
             key={index}
+            variants={cardVariants}
             className="flex flex-col items-start text-start bg-white p-6 rounded-lg border border-gray-200 hover:shadow-lg transition-shadow duration-300"
           >
             {/* Icons Row */}
@@ -91,10 +127,10 @@ const ServicesSection = () => {
                 </li>
               ))}
             </ul>
-          </div>
+          </motion.div>
         ))}
-      </div>
-    </section>
+      </motion.div>
+    </motion.section>
   );
 };
 
