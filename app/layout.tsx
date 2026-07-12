@@ -29,9 +29,9 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${geistSans.variable} ${geistMono.variable} bg-tertiary`}
+      className={`${geistSans.variable} ${geistMono.variable} bg-tertiary overflow-x-hidden`}
     >
-      <body className=" antialiased bg-tertiary overflow-x-hidden">
+      <body className=" antialiased bg-tertiary overflow-x-hidden overflow-y-hidden">
         <NavBarSection />
         {children}
         <FooterSection />
