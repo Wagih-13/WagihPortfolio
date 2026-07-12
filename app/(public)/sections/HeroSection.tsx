@@ -37,7 +37,7 @@ const AnimatedText = ({
 
 const HeroSection = () => {
   return (
-    <main className="flex flex-col items-center justify-start w-full bg-tertiary">
+    <main className="flex flex-col items-center justify-start overflow-x-hidden w-full bg-tertiary">
       <motion.h1
         className="font-bold font-main mt-8 text-[3rem] sm:text-[3.5rem] md:text-[4rem] lg:text-[5rem] text-center text-primary"
         initial={{ opacity: 0, y: -40 }}

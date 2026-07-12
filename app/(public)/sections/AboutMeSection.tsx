@@ -13,7 +13,7 @@ const AboutMeSection = () => {
       viewport={{ once: true, margin: "-100px" }}
       transition={{ duration: 0.7, ease: "easeOut" }}
     >
-      <section className="relative h-[60vw] md:h-[500px] bg-tertiary flex flex-col items-center justify-center overflow-hidden">
+      <section className="relative h-[60vw] md:h-[500px] bg-tertiary flex flex-col items-center justify-center ">
         <Image
           src="/Owner.png"
           alt="Owner Project"
